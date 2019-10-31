@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<script src="https://code.jquery.com/jquery-1.10.2.min.js" type="text/javascript" language="javascript"></script>
+<link rel="stylesheet" href="/js/bootstrap.js">
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="/boot-date/dist/css/bootstrap-datepicker.min.css">
+<script type="text/javascript" src="/boot-date/dist/js/bootstrap-datepicker.min.js"></script>
+<script type="text/javascript" src="/boot-date/dist/locales/bootstrap-datepicker.ja.min.js"></script>
+<link rel="shortcut icon" href="/path/favicon.ico">
+
+<head>
+	<title>Watch Video Window</title>
+	<link rel="stylesheet" href="/css/bootstrap.min.css">
+	<style>
+		.col div{
+			text-align: center;
+			font-size: 4.375vw;
+		}
+		.row div {
+			border: 1px solid red;
+		}
+		div {
+			text-align: center;
+			font-size: 2.5vw;
+			margin: auto;
+		}
+		.nav-link{
+			font-size: 20px;
+		}
+		.form-control{
+			width: auto;
+			height: auto;
+			text-align: center;
+			font-size: 3.0vw;
+			margin: auto;
+		}
+	</style>
+	<script type="text/javascript" language="javascript">
+    	function onButtonClick() {
+    		target = document.getElementById("output");
+        	target.innerText = document.forms.id_form1.id_textBox1.value;
+        	//target.innerText = document.id_form1.id_textBox1.value;//これでもOK
+    	}
+	</script>
+</head>
+
+<body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Management Window</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center col-sm-8" id="navbarText">
+        <ul class="navbar-nav ">
+          <li class="nav-item">
+            <a class="nav-link" href="sql_form">センサ情報<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="video_list">ビデオ一覧</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="photo_list">写真一覧</a>
+          </li>
+        </ul>
+
+      </div>
+</nav>
+<div class="form-group" id="datepicker-inline">
+  	<script>
+  		var now = new Date();
+		var year = now.getFullYear();
+		var month = now.getMonth()+1;
+		var day = now.getDate();
+    	document.write("<div class=in-line data-date="+year+"年"+month+"月"+day+"日></div>");
+	</script>
+	<br>
+    <input type="text" id="my_hidden_input" class="form-control">
+</div>
+<script>
+$(function(){
+    $('#datepicker-inline .in-line').datepicker({
+        format: "yyyy-mm-dd",
+        language: "ja",
+        autoclose: true
+    });
+    $('.in-line').on('changeDate', function() {
+        $('#my_hidden_input').val(
+            $('.in-line').datepicker('getFormattedDate')
+        );
+    });
+});
+	//var text = $('#my_hidden_input').val();
+	//console.log(text);
+	/*ocument.write('<form method=get action=sql_view?id='+ $('#my_hidden_input').val() + '>');
+	document.write("<button>送信</button>");
+	document.write('</form>');*/
+</script>
+
+<form name="sample">
+<input type="button" name="send" value="send" onClick="linkCheck(1)">
+</form>
+
+
+<script type="text/javascript">
+function linkCheck(btn){
+    link = "Yahoo!";
+    href = '/sql_view?'+ $('#my_hidden_input').val() +'';
+    location.href = href;
+}
+</script>
+
+<!--
+<form method="get" action="sql_view">
+    <button>送信</button>
+</form>
+!-->
+
+<!--
+<form name="form1" id="id_form1" action="">
+
+<input type="button" value="Exec" onclick="onButtonClick();" />
+</form>
+!-->
+
+<script>
+
+</script>
+
+
+
+<p>
+<a href="/" >メニュー画面へ戻る</a><br>
+</p>
+</body>

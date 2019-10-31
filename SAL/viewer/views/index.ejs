@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="ja">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <style>
+    .videolink a{
+      text-align: center;
+      font-size: 2.5vw;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    .collapse {
+      padding-right: 220px;
+    }
+    .nav-item {
+      margin: 0 20px;
+      font-size: 4.375vw;
+    }
+
+    .timelines {
+      background-color: #253233;
+      border: 2px solid black;
+      border-radius: 8px;
+      box-shadow: 0 0 0 4px white;
+      color: white;
+      margin: 0 10px;
+      width: 33%;
+      text-align: center;
+      word-break : break-all;
+      overflow: scroll;
+    }
+
+    .tl_inner {
+      background: white;
+      width: 100%;
+      height: 86%;
+      color: black;
+    }
+
+    #contents {
+      display: flex;
+      height: 800px; /*タイムラインの長さに影響 */
+      margin: 50px 0px;
+    }
+
+    h2 {
+
+    }
+  </style>
+
+
+
+    <title>Management Window</title>
+</head>
+
+<body>
+  <!--<nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark my-3">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-nav" aria-controls=".navbar-nav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#">Management Window</a>
+        <div class="collapse navbar-collapse justify-content-around">
+            <ul class="navbar-nav">
+                <li class="col-lg-8"><a class="col-lg-2" href="sql_form">センサ情報</a></li>
+                <li class="col-lg-8"><a class="col-lg-2" href="video_list">ビデオ一覧</a></li>
+                <li class="col-lg-8"><a class="col-lg-2" href="photo_list">写真一覧</a></li>
+            </ul>
+        </div>
+  </nav>!-->
+    <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Management Window</a>
+      <div class "navbar-header">
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+      </div>
+      <div class="collapse navbar-collapse target justify-content-center" id="gnavi">
+        <ul class="navbar-nav nav">
+          <li class="nav-item">
+            <a class="nav-link" href="sql_view">センサ情報<span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="video_list">ビデオ一覧</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="photo_list">写真一覧</a>
+          </li>
+        </ul>
+
+      </div>
+    </nav>
+
+
+
+    <div class="container">
+    <div id="contents">
+      <div class="timelines"><h2>撮影日時</h2>
+        <div class="tl_inner">
+          <script>
+            var videolist = "<%= mov_lis%>";
+            var top='';
+            var result = function(test, dict){
+              var flag = '';
+               var check = ''
+              for(i = 0,j = dict.length; i < j; i ++){
+                flag = dict.splice(0,1).toString();
+                console.log(flag);
+                try{
+                  reg = new RegExp(flag);
+                }catch(SyntaxError){
+                  reg = flag;
+                }
+                console.log(test);
+                while(true){
+                  test = test.replace(reg,'');
+                 if(test == check){
+                   break;
+                }else{
+                  check = test;
+                }
+              }
+            }
+            return test;
+            };
+            var dictionary = [ '&#34','[',']','"',";" ];
+            var result_json = result(videolist,dictionary);
+            console.log(result_json);
+            var json_before = result_json.split(',');
+            for(x=1,y=json_before.length;x<6;x++){
+              if(json_before[y-x] == undefined){
+                break;
+              }
+	      result = json_before[y-x].split('.')[0];
+              document.write('<div class=videolink><a href=video_view?id=' + result + '.mp4 class = videolink>'+ result + '</a></div><br>');
+            };
+          </script>
+        </div>
+      </div>
+      <div class="timelines"><h2>写真</h2>
+        <div class="tl_inner">
+          <script>
+            var videolist = "<%= mov_lis%>";
+            var top='';
+            var result = function(test, dict){
+              var flag = '';
+               var check = ''
+              for(i = 0,j = dict.length; i < j; i ++){
+                flag = dict.splice(0,1).toString();
+                console.log(flag);
+                try{
+                  reg = new RegExp(flag);
+                }catch(SyntaxError){
+                  reg = flag;
+                }
+                console.log(test);
+                while(true){
+                  test = test.replace(reg,'');
+                 if(test == check){
+                   break;
+                }else{
+                  check = test;
+                }
+              }
+            }
+            return test;
+            };
+            var dictionary = [ '&#34','[',']','"',";" ];
+            var result_json = result(videolist,dictionary);
+            console.log(result_json);
+            var json_before = result_json.split(',');
+            for(x=1,y=json_before.length;x<6;x++){
+              if(json_before[y-x] == undefined){
+                break;
+              }
+	      result = json_before[y-x].split('.')[0];
+	      document.write('<div class=photolink><a href=photo_view?id='+ result + '.jpg class=photolink><img src=images/' + result + '.jpg class=img-fluid /></a></div><br>');
+            };
+          </script>
+        </div>
+      </div>
+      <div class="timelines"><h2>センサ情報</h2>
+        <div class="tl_inner">
+          <script>
+            var videolist = "<%= sql_res%>";
+            var top='';
+            var result = function(test, dict){
+              var flag = '';
+               var check = ''
+              for(i = 0,j = dict.length; i < j; i ++){
+                flag = dict.splice(0,1).toString();
+                console.log(flag);
+                try{
+                  reg = new RegExp(flag);
+                }catch(SyntaxError){
+                  reg = flag;
+                }
+                console.log(test);
+                while(true){
+                  test = test.replace(reg,'');
+                 if(test == check){
+                   break;
+                }else{
+                  check = test;
+                }
+              }
+            }
+            return test;
+            };
+            var dictionary = [ '&#34','[',']','"',";" ];
+            var result_json = result(videolist,dictionary);
+            console.log(result_json);
+            var json_before = result_json.split(',');
+            document.write('<div class=container>');
+            for(x=15,y=json_before.length - 1;x>0;x--){
+              document.write('<div class=row>')
+              if(json_before[y] == undefined){
+                break;
+              }
+                document.write('<div class=col-xs-2>'+json_before[y]+':</div>');
+                y--;
+                document.write('<div class=col-xs-2>'+json_before[y]+':</div>');
+                y--;
+                document.write('<div class=col-xs-2>'+json_before[y]+'</div>');
+                y--
+              document.write('</div>')
+            };
+            document.write('</div>');
+          </script>
+          
+        </div>
+      </div>
+    </div>
+</div>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
+</body>
+
+</html>
