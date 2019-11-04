@@ -24,7 +24,7 @@ while(True):
 
     cur = conn.cursor()
     cur.execute('select * from sensor_config')
-    sensor_list = cur.fetchall() 
+    sensor_list = cur.fetchall()
     sensor_list = [sensor_list[i][0] for i in range(len(sensor_list))]
 
     ser = serial.Serial('/dev/ttyUSB0',115200)
@@ -43,7 +43,7 @@ while(True):
         today = date.strftime('%Y-%m-%d')
         now = date.strftime('%H:%M:%S')
         cur.execute('insert into sensor (date,time,place) values (%s,%s,%s)',(str(today),str(now),str(slicer)))
-        
+
         conn.commit()
     except IndexError:
         while True:
