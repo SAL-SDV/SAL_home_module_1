@@ -6,8 +6,8 @@ import os
 from watchdog.events import FileSystemEventHandler
 from watchdog.observers import Observer
 #↓更新にあわせて実行するモジュール(ここでは仮にsend_img_action.py)
-import send_img_action.py as action
-#import send_img_registor.py as registor
+from send_img_action import send_img_send as send
+from send_img_action import send_img_registor as registor
 
 # 監視対象のファイル
 observed_file_type = ('.jpg')
@@ -31,14 +31,16 @@ class ChangeHandler(FileSystemEventHandler):
             return
         if match(event.src_path):
             print('Create',event.src_path)
-            action.send(event.src_path) #ファイル作成時に実行
+            send.send(event.src_path) #ファイル作成時に実行
+            registor.registor(event.src_path) #ファイル作成時に実行
 
     def on_modified(self, event):
         if event.is_directory:
             return
         if match(event.src_path):
             print('Modified',event.src_path)
-            action.send(event.src_path)  #ファイル変更時に実行
+            send.send(event.src_path)  #ファイル変更時に実行
+            registor.registor(event.src_path) #ファイル作成時に実行
 
     def on_deleted(self, event):
         if event.is_directory:
