@@ -25,10 +25,12 @@ datetimestr = (''+path[-24:-5])
     
 datetime = datetime.datetime.strptime(datetimestr, '%Y:%m:%d:%H:%M:%S')
     
-id =3
+id =1
 cameraID=1
 
-info = [id,datetime,path,cameraID]
+send_path = ( ''+path[-31:])
+
+info = [id,datetime,send_path,cameraID]
 
 try:
         table = 'imagelist'
