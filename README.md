@@ -1,4 +1,4 @@
-**これは２０１８年度のものです
+__注）これは２０１８年度版のプログラムです→[最新版](https://github.com/SAL-SDV/SAL_home_module_2)__
 
 # SAL_home_module
 
